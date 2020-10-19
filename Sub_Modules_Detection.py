@@ -19,8 +19,9 @@ def Get_Files(path_to_folder):
     return names, good_images
 
 def Encoding(image_path):
-    image = face_recognition.load_image_file("C:/Users/ahmad/Pictures/Camera Roll/Muneeb Ahmad.jpg")
+    image = face_recognition.load_image_file(f"{image_path}")
     encoding = face_recognition.face_encodings(image)[0]
+    print(encoding)
     return encoding
 
 

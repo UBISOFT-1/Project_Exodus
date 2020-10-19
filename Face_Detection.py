@@ -1,8 +1,9 @@
 import face_recognition
 import cv2
 import numpy as np
-from Sub_Modules_Detection import Get_Files
-
+from Sub_Modules_Detection import Get_Files, Encoding
+import secrets
+import datetime
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
@@ -14,24 +15,18 @@ from Sub_Modules_Detection import Get_Files
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
-
-# Load a sample picture and learn how to recognize it.
-obama_image = face_recognition.load_image_file("C:/Users/ahmad/Pictures/Camera Roll/Muneeb Ahmad.jpg")
-obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
-
-# Load a second sample picture and learn how to recognize it.
-biden_image = face_recognition.load_image_file("C:/Users/ahmad/Pictures/Camera Roll/Muneeb Ahmad.jpg")
-biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
-
 # Create arrays of known face encodings and their names
-known_face_encodings = [
-    obama_face_encoding,
-    biden_face_encoding
-]
-known_face_names = [
-    "Muneeb Ahmad",
-    "Muneeb Ahmad Khurram"
-]
+# Encodings go here
+known_face_encodings = []
+# Face Names go Here
+
+names, path = Get_Files('./Faces')
+known_face_names = names
+for element in path:
+    encoding = Encoding(f'./Faces/{element}')
+    known_face_encodings.append(encoding)
+print(known_face_names)
+print(known_face_encodings)
 
 # Initialize some variables
 face_locations = []
@@ -71,7 +66,6 @@ while True:
             best_match_index = np.argmin(face_distances)
             if matches[best_match_index]:
                 name = known_face_names[best_match_index]
-
             face_names.append(name)
 
     process_this_frame = not process_this_frame
@@ -84,7 +78,21 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
-
+        if 'Unknown' in face_names:
+            print('Unknown User Detected')
+            password = secrets.token_urlsafe(32)
+            cv2.imwrite(f'./Unknown_Access/Faces/unknown_person{password}.jpg', frame)
+            encoding_unknown = Encoding(f'./Unknown_Access/Faces/unknown_person{password}.jpg')
+            f = open('./Unknown_Access/Face_Encodings.txt', 'r')
+            data = f.read().split('\n')
+            f.close()
+            f = open('./Unknown_Access/Face_Encodings.txt', 'a')
+            f.write(f'{encoding_unknown} sep {password} sep [Type Name Here] \n')
+            f.close()
+        else:
+            f = open('User_Access_Log.txt', 'a+')
+            for element in face_names:
+                f.write(f'{element} - {datetime.datetime.now()}')
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
@@ -94,7 +102,7 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
-    cv2.imshow('Video', frame)
+    cv2.imshow('Face_Detection_Algorithm', frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
