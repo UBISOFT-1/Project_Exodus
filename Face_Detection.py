@@ -23,8 +23,11 @@ known_face_encodings = []
 names, path = Get_Files('./Faces')
 known_face_names = names
 for element in path:
-    encoding = Encoding(f'./Faces/{element}')
-    known_face_encodings.append(encoding)
+    try:
+        encoding = Encoding(f'./Faces/{element}')
+        known_face_encodings.append(encoding)
+    except:
+        continue
 print(known_face_names)
 print(known_face_encodings)
 
@@ -92,10 +95,10 @@ while True:
         else:
             f = open('User_Access_Log_Name.txt', 'a+')
             for element in face_names:
-                f.write(f'{element}\n')
+                f.write(f'{element} - {datetime.datetime.now()}\n')
             f.close()
             f = open('User_Access_Log_Time.txt', 'a+')
-            f.write(f'{datetime.datetime.now()}')
+            f.write(f'{datetime.datetime.now()}\n')
             f.close()
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
