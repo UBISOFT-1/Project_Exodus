@@ -1,14 +1,18 @@
 import face_recognition
 import cv2
 import numpy as np
-from Sub_Modules_Detection import Get_Files, Encoding
+from Sub_Modules_Detection import *
 import secrets
 import datetime
+import os
+import ctypes
+import pyttsx3
+import random
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
 #   2. Only detect faces in every other frame of video.
-
+# Mean Stuff 2 Say
 # PLEASE NOTE: This example requires OpenCV (the `cv2` library) to be installed only to read from your webcam.
 # OpenCV is *not* required to use the face_recognition library. It's only required if you want to run this
 # specific demo. If you have trouble installing it, try any of the other demos that don't require it instead.
@@ -85,7 +89,10 @@ while True:
             print('Unknown User Detected')
             password = secrets.token_urlsafe(32)
             cv2.imwrite(f'./Unknown_Access/Faces/unknown_person{password}.jpg', frame)
-            encoding_unknown = Encoding(f'./Unknown_Access/Faces/unknown_person{password}.jpg')
+            try:
+                encoding_unknown = Encoding(f'./Unknown_Access/Faces/unknown_person{password}.jpg')
+            except:
+                encoding_unknown = 'Failed 2 Incode \n'
             f = open('./Unknown_Access/Face_Encodings.txt', 'r')
             data = f.read().split('\n')
             f.close()
@@ -100,6 +107,23 @@ while True:
             f = open('User_Access_Log_Time.txt', 'a+')
             f.write(f'{datetime.datetime.now()}\n')
             f.close()
+        f = open('Banned_People.txt', 'r+')
+        data = f.read()
+        data = data.split('\n')
+        print(data)
+        f.close()
+        for element_banned in data:
+            for element_names in face_names:
+                if element_names in element_banned:
+                    user32 = ctypes.windll.User32
+                    if is_locked() == True:
+                        stuff = mean_stuff_2_say()
+                        say(stuff)
+                    else:
+                        say(f"Computer is gonna be locked, You are not Verified, You are Banned {element_names} .....")
+                        ctypes.windll.user32.LockWorkStation()
+                    
+
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 

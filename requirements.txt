@@ -3,3 +3,5 @@ dlib
 numpy
 face_recognition
 opencv-python
+pyttsx3
+psutil
