@@ -116,7 +116,7 @@ while True:
             for element_names in face_names:
                 if element_names in element_banned:
                     user32 = ctypes.windll.User32
-                    if is_locked() == True:
+                    while is_locked() == True:
                         stuff = mean_stuff_2_say()
                         say(stuff)
                     else:
