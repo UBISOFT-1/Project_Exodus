@@ -81,6 +81,8 @@ When you are in the Folder, type `python Face_Detection.py` and thats it ;)
 
 Happy Secure Safe Computer :)
 
+https://youtu.be/IzgP8fH1QzY
+[![Watch the video](https://img.youtube.com/vi/IzgP8fH1QzY/maxresdefault.jpg)](https://youtu.be/IzgP8fH1QzY)
 
 # License
 MIT - (C) 2020 Muneeb Ahmad
