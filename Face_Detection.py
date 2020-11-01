@@ -8,6 +8,7 @@ import os
 import ctypes
 import pyttsx3
 import random
+import pickle
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
@@ -40,7 +41,7 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
-
+all_unknown_encodings = []
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -91,14 +92,20 @@ while True:
             cv2.imwrite(f'./Unknown_Access/Faces/unknown_person{password}.jpg', frame)
             try:
                 encoding_unknown = Encoding(f'./Unknown_Access/Faces/unknown_person{password}.jpg')
+                all_unknown_encodings.append(encoding_unknown)
             except:
-                encoding_unknown = 'Failed 2 Incode \n'
+                print("Failed to Encode - ;)")
             f = open('./Unknown_Access/Face_Encodings.txt', 'r')
             data = f.read().split('\n')
             f.close()
+            # Adding Encodings to the Simple .txt File
             f = open('./Unknown_Access/Face_Encodings.txt', 'a')
             f.write(f'{encoding_unknown} sep {password} sep [Type Name Here] \n')
             f.close()
+            # Adding Encoding() to the pickle file for further re-processing. Make sure this Folder is not Tampered with Especially this File
+            # Could be Tampered with to exec() malicious code in the memory. See: https://intoli.com/blog/dangerous-pickles/
+            with open('dataset_faces.dat', 'wb') as f:
+                pickle.dump(all_face_encodings, f)
         else:
             f = open('User_Access_Log_Name.txt', 'a+')
             for element in face_names:
@@ -116,13 +123,17 @@ while True:
             for element_names in face_names:
                 if element_names in element_banned:
                     user32 = ctypes.windll.User32
-                    while is_locked() == True:
-                        stuff = mean_stuff_2_say()
-                        say(stuff)
+                    if is_locked() == True:
+                        print(face_names)
+                        if face_names == []:
+                            print("No Faces in the image ;)")
+                        else:
+                            stuff = mean_stuff_2_say()
+                            say(stuff)
                     else:
                         say(f"Computer is gonna be locked, You are not Verified, You are Banned {element_names} .....")
                         ctypes.windll.user32.LockWorkStation()
-                    
+
 
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)

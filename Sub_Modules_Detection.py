@@ -35,12 +35,8 @@ def is_locked():
     for proc in psutil.process_iter():
         if(proc.name() == "LogonUI.exe"):
             return True
-mean_stuff = ['Get your face off fool, makes me wanna throw up!', 'Out of all the possibilties my AI has calculated, there is no chance in the universe for you to survive', 'Look whose here the Living Embodiment of an Asrehole', 'You are a dissappointment, a disgrace.', 'Why am I even doing this', 'Look, whose here blithering Idiot, get ur nasty asian face off']
+mean_stuff = ['Get your face off fool, makes me wanna throw up!', 'Out of all the possibilties my AI has calculated, there is no chance in the universe for you to survive', 'You are a dissappointment, a disgrace.', 'Why am I even doing this', 'Look, whose here blithering Idiot, get ur nasty asian face off']
 def mean_stuff_2_say():
     stuff_2_say = random.choice(mean_stuff)
     stuff_2_say = random.choice(mean_stuff)
     return stuff_2_say
-
-
-
-
