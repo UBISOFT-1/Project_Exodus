@@ -106,6 +106,10 @@ When you are in the Folder, type `python Face_Detection.py` and thats it ;)
 
 Happy Secure Safe Computer :)
 
+# New Features (Upcoming)
+- Detect if Camera is being Covered ;) (Almost Complete)
+- Option to process the image in personal colab of user for seamless experiance (Working)
+
 https://youtu.be/IzgP8fH1QzY
 [![Watch the video](https://img.youtube.com/vi/IzgP8fH1QzY/maxresdefault.jpg)](https://youtu.be/IzgP8fH1QzY)
 
