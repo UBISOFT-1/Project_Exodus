@@ -20,6 +20,7 @@ import pickle
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
+
 # Create arrays of known face encodings and their names
 # Encodings go here
 known_face_encodings = []
@@ -35,7 +36,11 @@ for element in path:
         continue
 print(known_face_names)
 print(known_face_encodings)
-
+def sharpness(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    lap = cv2.Laplacian(img, cv2.CV_16S)
+    mean, stddev = cv2.meanStdDev(lap)
+    return stddev[0,0]
 # Initialize some variables
 face_locations = []
 face_encodings = []
@@ -44,7 +49,17 @@ process_this_frame = True
 all_unknown_encodings = []
 while True:
     # Grab a single frame of video
+    # Just Ignore this Line :) rtsp://admin:12345678a@192.168.10.13:554/Streaming/channels/101/
+    #video_capture.open('')
+
     ret, frame = video_capture.read()
+    with open('./Camera_Covered_Values.txt', 'r+') as corrupt:
+        data = corrupt.read()
+        correct_data = data.split(',')
+        covered = correct_data[1]
+    if int(sharpness(frame)) <= float(covered):
+        ctypes.windll.user32.LockWorkStation()
+        say('Locked u Bitch, Try Covering ur screen now')
 
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
@@ -91,21 +106,25 @@ while True:
             password = secrets.token_urlsafe(32)
             cv2.imwrite(f'./Unknown_Access/Faces/unknown_person{password}.jpg', frame)
             try:
+                # Making a face_encoding of the unknown_person in view of the camera
                 encoding_unknown = Encoding(f'./Unknown_Access/Faces/unknown_person{password}.jpg')
                 all_unknown_encodings.append(encoding_unknown)
+                # Adding Encodings to the Simple .txt File
+                f = open('./Unknown_Access/Face_Encodings.txt', 'a')
+                f.write(f'{encoding_unknown} sep {password} sep [Type Name Here] \n')
+                f.close()
             except:
                 print("Failed to Encode - ;)")
             f = open('./Unknown_Access/Face_Encodings.txt', 'r')
             data = f.read().split('\n')
             f.close()
-            # Adding Encodings to the Simple .txt File
-            f = open('./Unknown_Access/Face_Encodings.txt', 'a')
-            f.write(f'{encoding_unknown} sep {password} sep [Type Name Here] \n')
-            f.close()
+
             # Adding Encoding() to the pickle file for further re-processing. Make sure this Folder is not Tampered with Especially this File
             # Could be Tampered with to exec() malicious code in the memory. See: https://intoli.com/blog/dangerous-pickles/
-            with open('dataset_faces.dat', 'wb') as f:
-                pickle.dump(all_face_encodings, f)
+            f = open('dataset_faces.dat', 'a+')
+            f.close()
+            with open('dataset_faces.dat', 'ab') as f:
+                pickle.dump(all_unknown_encodings, f)
         else:
             f = open('User_Access_Log_Name.txt', 'a+')
             for element in face_names:
@@ -134,7 +153,6 @@ while True:
                         say(f"Computer is gonna be locked, You are not Verified, You are Banned {element_names} .....")
                         ctypes.windll.user32.LockWorkStation()
 
-
         # Draw a box around the face
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
 
@@ -144,9 +162,9 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
     # Display the resulting image
-    cv2.imshow('Face_Detection_Algorithm', frame)
+    cv2.imshow('Face Detection Algorithm (C) 2020 Muneeb Ahmad - {PK-TR}', frame)
 
-    # Hit 'q' on the keyboard to quit!
+    # Hit 'q' on the keyboard to quit! -- Remove this Line 2 make it impossible to quit ;)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 

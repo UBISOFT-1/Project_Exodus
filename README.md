@@ -75,7 +75,32 @@ To *Restrict/Ban* a man from using your device or being infront of the webcam, g
 
 Then just add the First Part of the Image name in the `Banned_People.txt` as Muneeb Khurram for `Muneeb Khurram.jpeg`, hope you get the point.
 
+## Activate the Anti-Cover Feature in your Camera
+
+This is a really big feature in this new version Update 1.0. What is does is that it locks the PC if you are covering your Camera Lens,
+Previously, in Project Exodus, if the attacker knew about the Admin Password, he could cover the camera and evade this, but in this version
+we have stopped, this, to some extent it can even stop some malware as it keeps on locking. 
+
+### Procedure 
+
+1) Open the Folder of Project Exodus by `cd Project_Exodus`
+2) Then, type `python3 camera_adjustment.py`
+3) This will now open a Voice Driven Tutorial,
+4) First it will ask you which camera are u using, if you have more than one connected camera's
+
+**Note** If you want to use the default camera then press 0 or else select from the numbers provided above.
+ 
+ Then, take a photo in normal condition with your camera, after that take a photo with your lens
+ covered. And this should do the trick. :)
+ 
+ **Note** See the Demo Below, Trust me it is easy AF.
+   
+
 # How to RUN this,
+https://youtu.be/g5TGesFdI_4
+[![Watch the video](https://img.youtube.com/vi/g5TGesFdI_4/maxresdefault.jpg)](https://youtu.be/g5TGesFdI_4)
+
+:)
 
 When you are in the Folder, type `python Face_Detection.py` and thats it ;)
 
