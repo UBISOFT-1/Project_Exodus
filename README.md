@@ -105,12 +105,21 @@ https://youtu.be/g5TGesFdI_4
 When you are in the Folder, type `python Face_Detection.py` and thats it ;)
 
 Happy Secure Safe Computer :)
+# Connect a IP Webcam
+
+This features works, even over the internet, and if the user enter the room it locks the PC, tested it on a Camera 1000 Km
+away from my Home :), Works like a charm. Used HikVision Camera's.
+
+*Note*
+Still Working on that Feature :)
 
 # New Features (Upcoming)
-- Detect if Camera is being Covered ;) (Almost Complete)
-- Option to process the image in personal colab of user for seamless experiance (Working)
+- Detect if Camera is being Covered ;) (Almost Complete/Possible)
+- Connect IP Webcam (Under Dev/Possible)
+- Option to process the image in personal Google Colab of user for seamless experience (Trying/Possible)
 
 https://youtu.be/IzgP8fH1QzY
+[Old Video] - [Check the Above Video]
 [![Watch the video](https://img.youtube.com/vi/IzgP8fH1QzY/maxresdefault.jpg)](https://youtu.be/IzgP8fH1QzY)
 
 # License
