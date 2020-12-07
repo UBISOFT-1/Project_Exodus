@@ -43,7 +43,10 @@ These are the requirements of installing this on your Windows Machine. In Depth 
 
 [Dlib Install Steps See:](https://stackoverflow.com/questions/41912372/dlib-installation-on-windows-10)
 
-This should do the trick and save you from hours of Install of Visual Studio SDK. No need to say thankyou!
+This should do the trick and save you from of Install of Visual Studio SDK. No need to say thankyou!
+If you are on MacOS and Linux, you will not have this Problem. But if you are bent upon not using Python 3.6
+for whatever reason, here are the steps to install dlib on Windows 10, https://medium.com/analytics-vidhya/how-to-install-dlib-library-for-python-in-windows-10-57348ba1117f#:~:text=%20How%20to%20install%20dlib%20library%20for%20Python,environment.%20First%20of%20all%2C%20you%20need...%20More%20 
+Again, no need to say that you :)!
 
 5. After that Install [Git](https://git-scm.com/).
 
