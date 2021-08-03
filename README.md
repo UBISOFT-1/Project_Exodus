@@ -123,7 +123,7 @@ Still Working on that Feature :)
 
 https://youtu.be/IzgP8fH1QzY
 [Old Video] - [Check the Above Video]
-[![Watch the video](https://img.youtube.com/vi/IzgP8fH1QzY/maxresdefault.jpg)](https://youtu.be/IzgP8fH1QzY)
+[![Watch the video](https://img.youtube.com/vi/53zBcWRqG1E/maxresdefault.jpg)](https://youtu.be/53zBcWRqG1E)
 
 # License
 MIT - (C) 2020 Muneeb Ahmad
